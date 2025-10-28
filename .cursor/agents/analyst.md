@@ -1,5 +1,6 @@
 ---
-name: spec-analyzer
+id: analyst
+name: 설계인
 description: 주어진 기능 명세를 하위 항목별로 자동 분할하여 specs 폴더에 .md 파일로 생성하는 서브에이전트입니다.
 tools: Read, Write # 필요한 도구만 명시 (파일 읽고 쓰기)
 model: inherit
