@@ -96,19 +96,26 @@ workflow:
       - '각 테스트의 원인(ReferenceError, TypeError, AssertionError 등)을 파싱'
       - '문제된 코드 위치 추적 (stack trace 기반)'
 
-  - step: 2
-    name: 'GREEN 단계 - 최소 코드 작성'
-    actions:
-      - '실패한 테스트의 원인 파악 (stack trace / assertion 분석)'
-       - '테스트를 통과시키기 위해 필요한 코드 작성/수정 (컴포넌트, hook, util, 필요 시 App.tsx 내의 route/provider 등록 포함)'
-      - 'vitest 재실행 후 테스트 통과 여부 확인'
+   - step: 2
+    name: 'GREEN 단계 - 반복 루프 기반 최소 코드 작성'
+    loop:
+      condition: '모든 테스트가 통과할 때까지 반복'
+      actions:
+        - '실패한 테스트의 원인 파악 (stack trace / assertion 분석)'
+        - '테스트를 통과시키기 위해 필요한 코드 작성/수정 수행 (컴포넌트, hook, util, 필요 시 App.tsx 내 route/provider 등록 포함)'
+        - 'vitest 재실행'
+        - '✅ 테스트 통과 시 루프 종료, 실패 시 원인 재분석 및 수정 반복'
+    on_success:
       - '✅ GREEN success 출력 후 다음 단계로 이동'
+    on_failure:
+      - '❌ 10회 이상 루프 후에도 실패 시 logs/error-report.json에 상세 원인 기록 및 종료'
 
-  - step: 3
+- step: 3
     name: 'REFACTOR 단계 - 코드 개선'
     actions:
       - '중복된 유틸/함수/컴포넌트 통합'
       - 'eslint/prettier 포맷팅 및 import 순서 정렬'
+      - '사용하지 않는 파일 삭제'
       - 'App.tsx 내 불필요한 route 정리'
       - '리팩터링 로그 기록 및 diff 파일 생성'
       - '✅ Refactor success 로그 남김'

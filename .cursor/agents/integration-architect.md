@@ -68,21 +68,6 @@ workflow:
       - '기존 코드를 참고하여 작성'
       - '각 실패 케이스에 대해 현재 코드 스냅샷을 저장'
 
-  - step: 4
-    name: 'GREEN 단계 (자동 수정 및 재시도)'
-    actions:
-      - '실패한 Story에 해당하는 코드 위치 추적 (테스트 명 → 파일 경로 매핑)'
-      - '기존 코드 스냅샷과 테스트 실패 로그를 비교'
-      - '수정된 코드 적용 후 jest 재실행'
-      - '통과 시 ✅ Integration test passed 출력'
-      - '재시도 3회 이상 실패 시, Refactor 단계로 롤백 로그 생성'
-  - step: 5
-    name: '결과 분석 및 보고'
-    actions:
-      - '최종 통과된 Story 목록 및 통합 상태 요약'
-      - '테스트 실패 Story는 별도 issue-tracker에 자동 등록'
-      - '완료 시 ✅ Integration pipeline complete 출력'
-
 output_rules:
   - match: 'src/**tests**/integration/app.integration.spec.ts'
     action: '통합 테스트 케이스 자동 생성 및 업데이트'

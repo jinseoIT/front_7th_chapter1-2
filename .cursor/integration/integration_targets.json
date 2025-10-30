@@ -1,0 +1,63 @@
+{
+  "epic_id": "01_repeat-schedule",
+  "epic_name": "반복 일정 관리",
+  "completed_stories": [
+    {
+      "story_id": "S01",
+      "story_name": "매일 반복 일정 생성",
+      "feature_module": "utils/repeatSchedule",
+      "exports": ["generateDailyInstances"],
+      "integration_points": [
+        {
+          "type": "utility",
+          "location": "App.tsx",
+          "description": "일정 생성 시 반복 유형이 'daily'인 경우 generateDailyInstances 호출"
+        },
+        {
+          "type": "hook",
+          "location": "hooks/useEventOperations.ts",
+          "description": "일정 저장 시 반복 일정 인스턴스 생성"
+        }
+      ],
+      "test_scenarios": [
+        {
+          "scenario_id": "INT-S01-001",
+          "description": "사용자가 매일 반복 일정을 생성하면 UI에 여러 날짜에 표시된다",
+          "steps": [
+            "사용자가 일정 생성 폼을 연다",
+            "반복 유형으로 '매일'을 선택한다",
+            "시작일과 종료일을 설정한다",
+            "일정을 저장한다",
+            "캘린더 뷰에서 각 날짜에 일정이 표시되는지 확인한다"
+          ]
+        },
+        {
+          "scenario_id": "INT-S01-002",
+          "description": "매일 반복 일정의 인스턴스들이 검색 결과에 포함된다",
+          "steps": [
+            "매일 반복 일정을 생성한다",
+            "일정 제목으로 검색한다",
+            "검색 결과에 여러 날짜의 인스턴스가 모두 표시된다"
+          ]
+        }
+      ],
+      "status": "ready_for_integration",
+      "refactor_log": ".cursor/logs/story/S01-repeat-daily-generation-refactor.log"
+    }
+  ],
+  "pending_stories": [
+    "S02_repeat-weekly-generation",
+    "S03_repeat-monthly-31st-rule",
+    "S04_repeat-yearly-leapday-rule",
+    "S05_repeat-icon-visualization",
+    "S06_repeat-end-by-date",
+    "S07_repeat-edit-single-instance",
+    "S08_repeat-edit-all-instances",
+    "S09_repeat-delete-single-instance",
+    "S10_repeat-delete-all-instances"
+  ],
+  "integration_test_file": "src/__tests__/integration/app.integration.spec.tsx",
+  "integration_test_status": "passed",
+  "integration_test_count": 6,
+  "last_updated": "2025-10-30"
+}
