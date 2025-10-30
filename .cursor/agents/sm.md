@@ -61,11 +61,49 @@ workflow:
     output: 'src/features/[feature]/'
     note: '중복 제거, 품질 규칙 적용, 타입 정리'
 
-  - step: 6
-    name: '테스트 재실행 및 검증'
-    action: 'run test'
-    note: '리팩토링 후 전체 테스트 통과 여부 확인'
+   - step: 6
+    name: 'Story 단위 테스트 재실행 및 검증'
+    action: 'run test --match "src/__tests__/unit/hard.[feature].spec.ts"'
+    note: '리팩토링 후 해당 story의 테스트만 재실행하여 GREEN 유지 여부 확인'
+
+   - step: 7
+    name: 'App 통합 준비 및 자동 반영'
+    agent: integration
+    input:
+      - 'src/features/[feature]/index.ts'
+      - 'src/__tests__/unit/hard.[feature].spec.ts'
+    output:
+      - 'src/App.tsx'
+      - 'src/__tests__/integration/app.integration.spec.ts'
+    note: >
+      Story 단위의 TDD(REFACTOR 단계 포함)가 모두 완료된 경우,
+      integration agent가 해당 Story를 App.tsx에 자동 import 및 등록하고,
+      통합 테스트 스위트에 Story를 추가한다.
+
+  - step: 8
+    name: 'Epic 단위 통합 테스트 실행'
+    agent: integration
+    action: 'run test --match "src/__tests__/integration/app.integration.spec.ts"'
+    input: 'src/__tests__/integration/app.integration.spec.ts'
+    output: 'integration-test-report/[epic_id].log'
+    note: >
+      모든 Story가 App에 반영된 후, Epic 단위의 통합 테스트를 실행하여
+      시스템 전체의 일관성과 회귀를 검증한다.
+  - step: 9
+    name: 'Epic 통합 결과 리포트 및 상태 갱신'
+    agent: sm
+    input: 'integration-test-report/[epic_id].log'
+    output: './cursor/state/epic-status.json'
+    note: >
+      Epic 단위 테스트 결과를 취합하여 Epic 완료 상태를 업데이트하고,
+      모든 Story가 통합된 경우 Epic을 DONE 상태로 전환한다.
 ```
+
+## 실행 흐름 요약
+
+PO → Analyst → TestArchitect → Dev → Refactor
+→ Integration(App + Integration Test)
+→ SM(Epic Done)
 
 ## Story 단위 반복 로직
 
