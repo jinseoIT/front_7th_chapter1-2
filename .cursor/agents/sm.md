@@ -76,7 +76,7 @@ persona:
       - '결과를 ./cursor/logs/story/[feature]-refactor.log 에 기록'
 
   - step: 6
-    name: '통합 설계 (Integration Architect)'
+    name: '통합 테스트 설계 (Integration Architect)'
     agent: integration-architect
     input:
       - './cursor/logs/story/[feature]-refactor.log'
@@ -94,7 +94,7 @@ persona:
       - 'App 통합 테스트 시나리오 자동 구성'
 
   - step: 7
-    name: '통합 구현 (Integration Developer)'
+    name: 'App tsx 통합 구현 (Integration Developer)'
     agent: integration-developer
     input:
       - './cursor/integration/integration_targets.json'
