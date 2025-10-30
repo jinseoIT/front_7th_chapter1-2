@@ -115,6 +115,12 @@ guidelines:
     example:
       - tests/unit/hard.featureA.spec.ts
       - src/features/featureA/index.ts
+  - id: green_10
+    title: '서버 로직 참고'
+    description: >
+      서버 로직을 참고하여 어떤식으로 코드 생성하면 좋을지 참고
+    example:
+      - server.js
 ```
 
 ---

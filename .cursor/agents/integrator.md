@@ -66,6 +66,12 @@ guidelines:
       - 'eslint --fix, prettier --write 수행.'
       - 'import 순서는 feature 이름 기준 알파벳 정렬.'
       - '테스트 스위트 내 describe 순서도 동일 기준 유지.'
+  - id: integration_6
+    title: '서버 로직 참고'
+    description: >
+      서버 로직을 참고하여 어떤식으로 코드 생성하면 좋을지 참고
+    example:
+      - server.js
 ```
 
 ## 동작 절차 (Workflow)
