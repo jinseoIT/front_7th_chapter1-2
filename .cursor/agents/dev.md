@@ -69,7 +69,7 @@ guidelines:
   - id: green_5
     title: '기존 코드 재사용 우선순위'
     description: >
-      기존에 존재하는 코드나 유틸리티를 최우선으로 활용해야 한다.
+      IMPORTANT 기존에 존재하는 코드나 유틸리티를 최우선으로 활용해야 한다.
       동일한 기능이 존재할 경우 직접 구현하지 않고 import 한다.
       src/utils 내부에 동일 시그니처 함수가 존재하면 재정의 금지.
     reuse_priority:
