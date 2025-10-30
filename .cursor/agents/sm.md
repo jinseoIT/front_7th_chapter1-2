@@ -152,8 +152,28 @@ loop:
   for_each_story_in: './cursor/specs/stories/'
   do:
     - run: test-architect
+      post:
+        - run: bash .cursor/scripts/auto-commit.sh RED {{story.name}}
     - run: dev
+      post:
+        - run: bash .cursor/scripts/auto-commit.sh GREEN {{story.name}}
     - run: refactor
+      post:
+        - run: bash .cursor/scripts/auto-commit.sh REFACTOR {{story.name}}
+    - run: integration-architect
+      input:
+        - 'src/features/{{story.name}}/**'
+      output:
+        - 'src/__tests__/integration/{{story.name}}.integration.spec.ts'
+      post:
+        - run: bash .cursor/scripts/auto-commit.sh "[INTEGRATION-DESIGN]" "{{story.name}}"
+    - run: integration-developer
+      input:
+        - 'src/__tests__/integration/{{story.name}}.integration.spec.ts'
+      output:
+        - 'src/App.tsx'
+      post:
+        - run: bash .cursor/scripts/auto-commit.sh "[INTEGRATION-DEV]" "{{story.name}}"
   until: all_tests_pass
   on_fail:
     - log: '❌ 테스트 실패 — Story 다시 검토 필요'
