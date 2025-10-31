@@ -82,6 +82,8 @@ values: ['효율성', '유지보수성', '테스트 일관성']
 4. **안전성 보장**
    - 수정 전후 코드 diff를 생성하고 `logs/refactor-history.json`에 기록.
    - 통합 이후 테스트 재실행으로 회귀 여부 검증.
+5. **사전 학습**
+   - 코드 작성전 https://jskim1991.medium.com/react-dont-give-up-on-testing-when-using-material-ui-with-react-ff737969eec7 숙지
 
 ---
 

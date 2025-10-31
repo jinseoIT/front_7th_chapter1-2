@@ -428,6 +428,7 @@ function App() {
             <FormControlLabel
               control={
                 <Checkbox
+                  data-testid="repeat-checkbox"
                   checked={isRepeating}
                   onChange={(e) => setIsRepeating(e.target.checked)}
                 />
@@ -456,11 +457,15 @@ function App() {
           {isRepeating && (
             <Stack spacing={2}>
               <FormControl fullWidth>
-                <FormLabel>반복 유형</FormLabel>
+                <FormLabel id="repeat-type-label">반복 유형</FormLabel>
                 <Select
+                  labelId="repeat-type-label"
+                  id="repeat-type"
+                  data-testid="repeat-type-select"
                   size="small"
                   value={repeatType}
                   onChange={(e) => setRepeatType(e.target.value as RepeatType)}
+                  aria-label="반복 유형"
                 >
                   <MenuItem value="none">반복 안함</MenuItem>
                   <MenuItem value="daily">매일</MenuItem>
@@ -471,22 +476,27 @@ function App() {
               </FormControl>
               <Stack direction="row" spacing={2}>
                 <FormControl fullWidth>
-                  <FormLabel>반복 간격</FormLabel>
+                  <FormLabel id="repeat-interval-label">반복 간격</FormLabel>
                   <TextField
+                    id="repeat-interval"
+                    data-testid="repeat-interval-input"
                     size="small"
                     type="number"
                     value={repeatInterval}
                     onChange={(e) => setRepeatInterval(Number(e.target.value))}
                     slotProps={{ htmlInput: { min: 1 } }}
+                    inputProps={{ 'aria-label': '반복 간격' }}
                   />
                 </FormControl>
                 <FormControl fullWidth>
-                  <FormLabel>반복 종료일</FormLabel>
+                  <FormLabel id="repeat-end-date-label">반복 종료일</FormLabel>
                   <TextField
+                    id="repeat-end-date"
                     size="small"
                     type="date"
                     value={repeatEndDate}
                     onChange={(e) => setRepeatEndDate(e.target.value)}
+                    inputProps={{ 'data-testid': 'repeat-end-date-input' }}
                   />
                 </FormControl>
               </Stack>
